@@ -26,5 +26,3 @@ try:
     client.run(os.getenv('TOKEN'))
 except Exception as e:
     print(f"Error - Login Failed: {e}")
-
-client = nextcord.Client()
