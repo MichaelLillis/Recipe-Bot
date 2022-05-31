@@ -1,8 +1,13 @@
-from nextcord.ext import commands
+import nextcord
+import nextcord.ext.commands
+import os
 
-# TODO: config functionality w/ prefix
-bot = commands.Bot(config["prefix"])
-print("Loading bot...")
+client = nextcord.Client()
+
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
 
 # TODO: Setup inital command with modal prompting users of recipe name/ingredients
 
@@ -13,9 +18,13 @@ print("Loading bot...")
 # TODO: Take input of users and pass it to database
 
 
-# TODO: Setup server w/ bot
-# TODO: Setup token functionality w/ config
+# TODO: Get specific recipe from database
+
+# TODO: Get random recipe from database
+
 try:
-    bot.run(config["token"])
+    client.run(os.getenv('TOKEN'))
 except Exception as e:
     print(f"Error - Login Failed: {e}")
+
+client = nextcord.Client()
