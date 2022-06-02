@@ -18,14 +18,24 @@ async def on_ready():
 
 # TODO: Setup databse (FireBase)
 def new_recipe(recipe_name: str, ingredient_list: list[str], date: date, user: str):
-    firebase = pyrebase.initialize_app(firebaseConfig)
-    db = firebase.database()
-    data = {
-        "Recipe": recipe_name,
-        "Ingredients": ingredient_list,
-        "Date created": date, "Author": user
-    }
-    db.child("Recipes").set(data)
+    try:
+        for ingredients in range(len(ingredient_list)):
+            ingredient_list[ingredients] = ingredient_list[ingredients].lower()
+            for letters in range(len(ingredients) - 1):
+                if ingredient_list[ingredients][letters] is ' ' and ingredient_list[ingredients][letters + 1].isalpha():
+                    ingredient_list[ingredients][letters +
+                                                 1] = ingredient_list[ingredients][letters + 1].upper()
+
+        firebase = pyrebase.initialize_app(firebaseConfig)
+        db = firebase.database()
+        data = {
+            "Recipe": recipe_name,
+            "Ingredients": ingredient_list,
+            "Date created": date, "Author": user
+        }
+        db.child("Recipes").set(data)
+    except Exception as e:
+        print(f"Error - Data Entry Add Failed: {e}")
 
 # TODO: Take input of users and pass it to database
 
