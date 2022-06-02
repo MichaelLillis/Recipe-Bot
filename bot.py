@@ -15,7 +15,7 @@ async def on_ready():
 # TODO: Setup inital command with modal prompting users of recipe name/ingredients
 
 
-# TODO: Setup databse (SQL)
+# TODO: Setup databse (FireBase)
 firebase = pyrebase.initialize_app(firebaseConfig)
 
 
