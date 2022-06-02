@@ -20,12 +20,13 @@ async def on_ready():
 def new_recipe(recipe_name: str, ingredient_list: list[str], date: date, user: str):
     try:
         for ingredients in range(len(ingredient_list)):
-            ingredient_list[ingredients] = ingredient_list[ingredients].lower()
-            for letters in range(len(ingredients) - 1):
-                nextletter = letters + 1
-                if ingredient_list[ingredients][letters] is ' ' and ingredient_list[ingredients][nextletter].isalpha():
-                    ingredient_list[ingredients][nextletter] = ingredient_list[ingredients][nextletter].upper(
-                    )
+            ingredient = ingredient_list[ingredients]
+            ingredient = ingredient.lower()
+            for letters in range(len(ingredient) - 1):
+                currentletter = ingredient_list[ingredients][letters]
+                nextletter = ingredient_list[ingredients][letters + 1]
+                if currentletter is ' ' and nextletter.isalpha():
+                    nextletter = nextletter.upper()
 
         firebase = pyrebase.initialize_app(firebaseConfig)
         db = firebase.database()
