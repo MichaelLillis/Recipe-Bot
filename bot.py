@@ -1,7 +1,8 @@
 import nextcord
 import nextcord.ext.commands
 import os
-
+import pyrebase
+from database import firebaseConfig
 client = nextcord.Client()
 
 
@@ -13,14 +14,16 @@ async def on_ready():
 
 
 # TODO: Setup databse (SQL)
+firebase = pyrebase.initialize_app(firebaseConfig)
 
 
 # TODO: Take input of users and pass it to database
+@client.slash_command
+async def add_recipe(ctx):
 
+    # TODO: Get specific recipe from database
 
-# TODO: Get specific recipe from database
-
-# TODO: Get random recipe from database
+    # TODO: Get random recipe from database
 
 try:
     client.run(os.getenv('TOKEN'))
