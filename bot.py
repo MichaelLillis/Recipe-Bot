@@ -22,9 +22,10 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], date: date, user: s
         for ingredients in range(len(ingredient_list)):
             ingredient_list[ingredients] = ingredient_list[ingredients].lower()
             for letters in range(len(ingredients) - 1):
-                if ingredient_list[ingredients][letters] is ' ' and ingredient_list[ingredients][letters + 1].isalpha():
-                    ingredient_list[ingredients][letters +
-                                                 1] = ingredient_list[ingredients][letters + 1].upper()
+                nextletter = letters + 1
+                if ingredient_list[ingredients][letters] is ' ' and ingredient_list[ingredients][nextletter].isalpha():
+                    ingredient_list[ingredients][nextletter] = ingredient_list[ingredients][nextletter].upper(
+                    )
 
         firebase = pyrebase.initialize_app(firebaseConfig)
         db = firebase.database()
