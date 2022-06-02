@@ -1,6 +1,7 @@
 import nextcord
 import nextcord.ext.commands
 import os
+from datetime import date
 import pyrebase
 from dotenv import load_dotenv
 from database import firebaseConfig
@@ -16,10 +17,19 @@ async def on_ready():
 
 
 # TODO: Setup databse (FireBase)
-firebase = pyrebase.initialize_app(firebaseConfig)
-
+def new_recipe(recipe_name: str, ingredient_list: list[str], date: date, user: str):
+    firebase = pyrebase.initialize_app(firebaseConfig)
+    db = firebase.database()
+    data = {
+        "Recipe": recipe_name,
+        "Ingredients": ingredient_list,
+        "Date created": date, "Author": user
+    }
+    db.child("Recipes").set(data)
 
 # TODO: Take input of users and pass it to database
+
+
 @client.slash_command
 async def add_recipe(ctx):
     pass
