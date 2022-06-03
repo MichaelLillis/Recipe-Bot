@@ -1,4 +1,3 @@
-from discord import slash_command
 import nextcord
 import nextcord.ext.commands
 import os
@@ -17,7 +16,23 @@ async def on_ready():
 # TODO: Setup inital command with modal prompting users of recipe name/ingredients
 
 
+@client.slash_command(name="Recipe", description="Recipe bot commands!", guild_ids=[977909622230900766])
+@nextcord.ext.commands.cooldown(1, 60, type=nextcord.ext.commands.BucketType.default)
+async def recipe(interaction: nextcord.Interaction):
+    pass
+
+
+@recipe.subcommand(name="Add recipe", description="Add a recipe to the recipe list")
+async def add(interaction: nextcord.Interaction):
+    await interaction.response.send_message("Added recipe!")
+
+# TODO: Get specific recipe from database
+
+# TODO: Get random recipe from database
+
 # TODO: Setup databse (FireBase)
+
+
 def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: date, user: str):
     try:
         for ingredients in range(len(ingredient_list)):
@@ -44,14 +59,6 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
 
 # TODO: Take input of users and pass it to database
 
-
-@client.slash_command(name="Add recipe", description="Add a recipe to the recipe list", guild_ids=["SERVER"])
-@nextcord.ext.commands.cooldown(1, 60, type=nextcord.ext.commands.BucketType.default)
-async def add_recipe(ctx):
-    pass
-    # TODO: Get specific recipe from database
-
-    # TODO: Get random recipe from database
 
 try:
     load_dotenv()
