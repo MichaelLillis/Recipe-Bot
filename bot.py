@@ -1,11 +1,11 @@
 import nextcord
 import nextcord.ext.commands
 import os
-from datetime import date
+from datetime import date, datetime
 import pyrebase
 from dotenv import load_dotenv
 from database import firebaseConfig, SERVER
-# client = nextcord.Client()
+import string
 
 # TODO Modal
 
@@ -46,13 +46,19 @@ class RecipeModal(nextcord.ui.Modal):
 
     async def callback(self, interaction: nextcord.Interaction):
         await interaction.send(
-            f"Recipe name: {self.recipe_title.value}\n"
-            f"Recipe from {interaction.user.mention}\n"
-            f"Ingredients: {self.ingredients.value}\n"
-            f"How to make the recipe: {self.instructions.value}\n"
+            f"Recipe added!"
         )
         # TODO Call db function
-        # new_recipe(self.recipe_title.value, )
+        ingredient_list = self.ingredients.value.split(", ")
+        now = datetime.now()
+        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        new_recipe(
+            self.recipe_title.value,
+            ingredient_list,
+            self.instructions.value,
+            date_time,
+            interaction.user.name
+        )
 
 
 class Bot(nextcord.ext.commands.Bot):
@@ -81,15 +87,11 @@ bot = Bot(command_prefix="!")
 )
 async def recipes(interaction: nextcord.Interaction):
     await interaction.response.send_modal(RecipeModal())
-# @client.event
-# async def on_ready():
-#     print(f'We have logged in as {client.user}')
 
 # TODO: Setup inital command with modal prompting users of recipe name/ingredients
 
 
 @bot.slash_command(description="Recipe bot commands!", guild_ids=[SERVER])
-# @nextcord.ext.commands.cooldown(1, 60, type=nextcord.ext.commands.BucketType.default)
 async def recipe(interaction: nextcord.Interaction):
     pass
 
@@ -105,16 +107,10 @@ async def add(interaction: nextcord.Interaction):
 # TODO: Setup databse (FireBase)
 
 
-def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: date, user: str):
+def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str):
     try:
-        for ingredients in range(len(ingredient_list)):
-            ingredient = ingredient_list[ingredients]
-            ingredient = ingredient.lower()
-            for letters in range(len(ingredient) - 1):
-                currentletter = ingredient_list[ingredients][letters]
-                nextletter = ingredient_list[ingredients][letters + 1]
-                if currentletter == ' ' and nextletter.isalpha():
-                    nextletter = nextletter.upper()
+        for i in ingredient_list:
+            i = i.capitalize()
 
         firebase = pyrebase.initialize_app(firebaseConfig)
         db = firebase.database()
@@ -129,9 +125,8 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
     except Exception as e:
         print(f"Error - Data Entry Add Failed: {e}")
 
+
 # TODO: Take input of users and pass it to database
-
-
 try:
     load_dotenv()
     token = os.getenv("TOKEN")
