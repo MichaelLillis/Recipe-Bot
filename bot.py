@@ -4,7 +4,7 @@ import os
 from datetime import date, datetime
 import pyrebase
 from dotenv import load_dotenv
-from database import firebaseConfig, SERVER
+from database import firebaseConfig
 import string
 
 # TODO Modal
@@ -79,11 +79,14 @@ class Bot(nextcord.ext.commands.Bot):
 
 
 bot = Bot(command_prefix="!")
+load_dotenv()
+token = os.getenv("TOKEN")
+server = os.getenv("SERVER")
 
 
 @bot.slash_command(
     description="Add a recipe to the recipes list!",
-    guild_ids=[SERVER],
+    guild_ids=[int(server)],
 )
 async def recipes(interaction: nextcord.Interaction):
     await interaction.response.send_modal(RecipeModal())
@@ -91,7 +94,7 @@ async def recipes(interaction: nextcord.Interaction):
 # TODO: Setup inital command with modal prompting users of recipe name/ingredients
 
 
-@bot.slash_command(description="Recipe bot commands!", guild_ids=[SERVER])
+@bot.slash_command(description="Recipe bot commands!", guild_ids=[server])
 async def recipe(interaction: nextcord.Interaction):
     pass
 
@@ -128,8 +131,6 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
 
 # TODO: Take input of users and pass it to database
 try:
-    load_dotenv()
-    token = os.getenv("TOKEN")
     bot.run(token)
 except Exception as e:
     print(f"Error - Login Failed: {e}")
