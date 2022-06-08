@@ -78,10 +78,11 @@ class Bot(nextcord.ext.commands.Bot):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
 
 
-bot = Bot(command_prefix="!")
 load_dotenv()
+prefix = os.getenv("PREFIX")
 token = os.getenv("TOKEN")
 server = os.getenv("SERVER")
+bot = Bot(prefix)
 
 
 @bot.slash_command(
