@@ -69,9 +69,6 @@ class Bot(nextcord.ext.commands.Bot):
 
     async def on_ready(self):
         if not self.persistent_modals_added:
-            # Register the persistent modal for listening here.
-            # Note that this does not display the modal to the user.
-            # To do that, you need to respond to an interaction as shown below.
             self.add_modal(RecipeModal())
             self.persistent_modals_added = True
 
@@ -85,30 +82,35 @@ server = os.getenv("SERVER")
 bot = Bot(prefix)
 
 
+# async def recipes(interaction: nextcord.Interaction):
+#     await interaction.response.send_modal(RecipeModal())
+
+
 @bot.slash_command(
     description="Add a recipe to the recipes list!",
     guild_ids=[int(server)],
 )
-async def recipes(interaction: nextcord.Interaction):
-    await interaction.response.send_modal(RecipeModal())
-
-# TODO: Setup inital command with modal prompting users of recipe name/ingredients
-
-
-@bot.slash_command(description="Recipe bot commands!", guild_ids=[server])
 async def recipe(interaction: nextcord.Interaction):
     pass
 
 
 @recipe.subcommand(description="Add a recipe to the recipe list")
 async def add(interaction: nextcord.Interaction):
-    await interaction.response.send_message("Added recipe!")
+    await interaction.response.send_modal(RecipeModal())
 
-# TODO: Get specific recipe from database
+# TODO: Get specific recipe from database:
+# 'if name/recipe exists... do logic to parse ingredients, and embed a message'
+# Message should have multiple pages (if necesary, page per recipe)
+
+
+@recipe.subcommand(description="Find a specific recipe")
+async def find(interaction: nextcord.Interaction):
+    embed = nextcord.Embed(
+        title="title", description="desc")
+    embed.add_field(name="Name", value="field")
+    await interaction.send(embed=embed)
 
 # TODO: Get random recipe from database
-
-# TODO: Setup databse (FireBase)
 
 
 def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str):
