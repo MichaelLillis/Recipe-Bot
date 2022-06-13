@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from dbm import _Database
 import nextcord
 import nextcord.ext.commands
 import os
@@ -59,8 +58,7 @@ class RecipeModal(nextcord.ui.Modal):
             ingredient_list,
             self.instructions.value,
             date_time,
-            interaction.user,
-            interaction.user.id
+            interaction.user
         )
 
 
@@ -121,17 +119,19 @@ async def find(interaction: nextcord.Interaction, *, input):
 # TODO: Get random recipe from database
 
 # Grab user using interaction, and use the user ID for the author in the db, and the displayname for the child title
-def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user_id: nextcord.Interaction.user.id, user: nextcord.Interaction.user):
+def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: nextcord.Interaction):
     try:
         for i in ingredient_list:
             i = i.capitalize()
+
+
 # TODO change 'Author' to an int
         data = {
             "Recipe": recipe_name,
             "Ingredients": ingredient_list,
             "Instructions": instructions,
             "Date created": date,
-            "Author": user_id
+            "Author": user.id
         }
         db.child(f"{recipe_name} by {user}").set(data)
     except Exception as e:
