@@ -59,7 +59,8 @@ class RecipeModal(nextcord.ui.Modal):
             ingredient_list,
             self.instructions.value,
             date_time,
-            interaction.user.name
+            interaction.user,
+            interaction.user.id
         )
 
 
@@ -86,10 +87,6 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 
 
-# async def recipes(interaction: nextcord.Interaction):
-#     await interaction.response.send_modal(RecipeModal())
-
-
 @bot.slash_command(
     description="Add a recipe to the recipes list!",
     guild_ids=[int(server)],
@@ -109,36 +106,38 @@ async def add(interaction: nextcord.Interaction):
 
 @recipe.subcommand(description="Find a specific recipe")
 async def find(interaction: nextcord.Interaction, *, input):
-    # is authored stored as display name or username?
-    if (input == "yes" or input == db):
-        # return an embeded message with that recipe/author
+    # TODO: setup functionality for querying the database
+    if (input == "yes" or input == 'db recipe' or input == 'db author'):
+        # TODO: setup embed with pages based on number of results from DB
         await interaction.send("pass")
         # embed = nextcord.Embed(
         #     title="title", description="desc")
         # embed.add_field(name="Name", value="field")
         # await interaction.send(embed=embed)
+    else:
+        await interaction.send("Recipe with that author/name does not exist.")
+
 
 # TODO: Get random recipe from database
 
-
-def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str):
+# Grab user using interaction, and use the user ID for the author in the db, and the displayname for the child title
+def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user_id: nextcord.Interaction.user.id, user: nextcord.Interaction.user):
     try:
         for i in ingredient_list:
             i = i.capitalize()
-
+# TODO change 'Author' to an int
         data = {
             "Recipe": recipe_name,
             "Ingredients": ingredient_list,
             "Instructions": instructions,
             "Date created": date,
-            "Author": user
+            "Author": user_id
         }
         db.child(f"{recipe_name} by {user}").set(data)
     except Exception as e:
         print(f"Error - Data Entry Add Failed: {e}")
 
 
-# TODO: Take input of users and pass it to database
 try:
     bot.run(token)
 except Exception as e:
