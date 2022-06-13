@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+from dbm import _Database
 import nextcord
 import nextcord.ext.commands
 import os
@@ -80,6 +82,8 @@ prefix = os.getenv("PREFIX")
 token = os.getenv("TOKEN")
 server = os.getenv("SERVER")
 bot = Bot(prefix)
+firebase = pyrebase.initialize_app(firebaseConfig)
+db = firebase.database()
 
 
 # async def recipes(interaction: nextcord.Interaction):
@@ -104,11 +108,15 @@ async def add(interaction: nextcord.Interaction):
 
 
 @recipe.subcommand(description="Find a specific recipe")
-async def find(interaction: nextcord.Interaction):
-    embed = nextcord.Embed(
-        title="title", description="desc")
-    embed.add_field(name="Name", value="field")
-    await interaction.send(embed=embed)
+async def find(interaction: nextcord.Interaction, *, input):
+    # is authored stored as display name or username?
+    if (input == "yes" or input == db):
+        # return an embeded message with that recipe/author
+        await interaction.send("pass")
+        # embed = nextcord.Embed(
+        #     title="title", description="desc")
+        # embed.add_field(name="Name", value="field")
+        # await interaction.send(embed=embed)
 
 # TODO: Get random recipe from database
 
@@ -118,8 +126,6 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
         for i in ingredient_list:
             i = i.capitalize()
 
-        firebase = pyrebase.initialize_app(firebaseConfig)
-        db = firebase.database()
         data = {
             "Recipe": recipe_name,
             "Ingredients": ingredient_list,
