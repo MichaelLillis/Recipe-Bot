@@ -5,6 +5,7 @@ import os
 from datetime import date, datetime
 import pyrebase
 from dotenv import load_dotenv
+from requests_toolbelt import user_agent
 from database import firebaseConfig
 import string
 
@@ -46,10 +47,6 @@ class RecipeModal(nextcord.ui.Modal):
         self.add_item(self.instructions)
 
     async def callback(self, interaction: nextcord.Interaction):
-        await interaction.send(
-            f"Recipe added!"
-        )
-        # TODO Call db function
         ingredient_list = self.ingredients.value.split(", ")
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -58,7 +55,12 @@ class RecipeModal(nextcord.ui.Modal):
             ingredient_list,
             self.instructions.value,
             date_time,
-            interaction.user
+            interaction.user.display_name,
+            interaction.user.id
+        )
+        # TODO: Setup 'failed' message for user
+        await interaction.send(
+            f"Recipe added!"
         )
 
 
@@ -122,7 +124,7 @@ async def find(interaction: nextcord.Interaction, *, input):
 # TODO: Get random recipe from database
 
 # Grab user using interaction, and use the user ID for the author in the db, and the displayname for the child title
-def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: nextcord.Interaction):
+def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str, user_id: int):
     try:
         for i in ingredient_list:
             i = i.capitalize()
@@ -133,7 +135,7 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
             "Ingredients": ingredient_list,
             "Instructions": instructions,
             "Date created": date,
-            "Author": user.id
+            "Author": user_id
         }
         db.child(f"{recipe_name} by {user}").set(data)
     except Exception as e:
