@@ -105,6 +105,9 @@ async def add(interaction: nextcord.Interaction):
 @recipe.subcommand(description="Find a specific recipe")
 async def find(interaction: nextcord.Interaction, *, input):
     # TODO: setup functionality for querying the database
+    recipes = db.child(input).get()
+    for recipe in recipes.each():
+        await interaction.send(recipe.val())
     if (input == "yes" or input == 'db recipe' or input == 'db author'):
         # TODO: setup embed with pages based on number of results from DB
         await interaction.send("pass")
@@ -123,7 +126,6 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
     try:
         for i in ingredient_list:
             i = i.capitalize()
-
 
 # TODO change 'Author' to an int
         data = {
