@@ -117,9 +117,13 @@ async def find(interaction: nextcord.Interaction, *, input: str):
             "Author").equal_to(author_id).get()
         our_recipe = recipes.val()
         items = list(our_recipe.items())
-        print(items[0][1]["Author"])
+        name_of_recipe = items[0][1]["Recipe"]
+        recipe_author = items[0][1]["Name"]
         embed = nextcord.Embed(
-            title=items[0][1]["Recipe"], description=items[0][1]["Ingredients"])
+            title=name_of_recipe.capitalize(), description=items[0][1]["Ingredients"])
+        embed.set_author(
+            name=f"{name_of_recipe.capitalize()} by {recipe_author}"
+        )
         embed.add_field(
             name='Instructions', value=items[0][1]["Instructions"], inline=False
         )
