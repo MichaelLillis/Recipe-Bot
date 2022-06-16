@@ -140,8 +140,7 @@ async def find(interaction: nextcord.Interaction, *, input: str):
 # Grab user using interaction, and use the user ID for the author in the db, and the displayname for the child title
 def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str, user_id: int):
     try:
-        for i in ingredient_list:
-            i = i.capitalize()
+        ingredient_list = cap(ingredient_list)
 
 # TODO change 'Author' to an int
         data = {
@@ -154,6 +153,10 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
         db.child("Recipes").child(f"{recipe_name} by {user}").set(data)
     except Exception as e:
         print(f"Error - Data Entry Add Failed: {e}")
+
+
+def cap(words) -> list:
+    return [s.capitalize() for s in words]
 
 
 try:
