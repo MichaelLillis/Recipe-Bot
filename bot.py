@@ -105,20 +105,33 @@ async def add(interaction: nextcord.Interaction):
 
 
 @recipe.subcommand(description="Find a specific recipe")
-async def find(interaction: nextcord.Interaction, *, input):
-    # TODO: setup functionality for querying the database
-    recipes = db.child(input).get()
-    for recipe in recipes.each():
-        await interaction.send(recipe.val())
-    if (input == "yes" or input == 'db recipe' or input == 'db author'):
-        # TODO: setup embed with pages based on number of results from DB
-        await interaction.send("pass")
-        # embed = nextcord.Embed(
-        #     title="title", description="desc")
-        # embed.add_field(name="Name", value="field")
-        # await interaction.send(embed=embed)
+async def find(interaction: nextcord.Interaction, *, input: str):
+    # TODO: fix .indexOn error
+    # TODO: Setup embeds with pages
+    # TODO: setup functionality for querying the database - seperate getting recipes to diff function
+    if input.startswith("<@!"):
+        author_id = int(''.join(filter(str.isdigit, input)))
+        recipes = db.child("Recipes").order_by_child(
+            "Author").equal_to(author_id).get()
+        print(recipes)
+        await interaction.send("TEST - recipe with author exists")
+    # TODO: Setup grabbing recipe using recipe
     else:
-        await interaction.send("Recipe with that author/name does not exist.")
+        await interaction.send("TEST - recipe with author exists")
+
+    # else:
+    #     recipes = db.child("Recipes").order_by_child(
+    #         "Author").equal_to(input).get()
+
+    # if recipes > 0:
+    #     # TODO: setup embed with pages based on number of results from DB
+    #     await interaction.send("working.")
+    #     # embed = nextcord.Embed(
+    #     #     title="title", description="desc")
+    #     # embed.add_field(name="Name", value="field")
+    #     # await interaction.send(embed=embed)
+    # else:
+    #     await interaction.send("Recipe with that author/name does not exist.")
 
 
 # TODO: Get random recipe from database
@@ -137,7 +150,7 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
             "Date created": date,
             "Author": user_id
         }
-        db.child(f"{recipe_name} by {user}").set(data)
+        db.child("Recipes").child(f"{recipe_name} by {user}").set(data)
     except Exception as e:
         print(f"Error - Data Entry Add Failed: {e}")
 
