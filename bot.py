@@ -6,7 +6,7 @@ from datetime import date, datetime
 import pyrebase
 from dotenv import load_dotenv
 from requests_toolbelt import user_agent
-from database import firebaseConfig
+from database import firebaseConfig, patch
 import string
 
 # TODO Modal
@@ -79,6 +79,7 @@ class Bot(nextcord.ext.commands.Bot):
 
 
 load_dotenv()
+patch()
 prefix = os.getenv("PREFIX")
 token = os.getenv("TOKEN")
 server = os.getenv("SERVER")
@@ -113,8 +114,8 @@ async def find(interaction: nextcord.Interaction, *, input: str):
         author_id = int(''.join(filter(str.isdigit, input)))
         recipes = db.child("Recipes").order_by_child(
             "Author").equal_to(author_id).get()
-        print(recipes)
-        await interaction.send("TEST - recipe with author exists")
+        print(recipes.val())
+        await interaction.send(f"TEST - recipe with author exists: {recipes.val()}")
     # TODO: Setup grabbing recipe using recipe
     else:
         await interaction.send("TEST - recipe with author exists")
