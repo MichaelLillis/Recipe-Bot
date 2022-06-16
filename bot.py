@@ -1,4 +1,6 @@
+from cmath import rect
 from dataclasses import dataclass
+import re
 import nextcord
 import nextcord.ext.commands
 import os
@@ -107,15 +109,25 @@ async def add(interaction: nextcord.Interaction):
 
 @recipe.subcommand(description="Find a specific recipe")
 async def find(interaction: nextcord.Interaction, *, input: str):
-    # TODO: fix .indexOn error
     # TODO: Setup embeds with pages
     # TODO: setup functionality for querying the database - seperate getting recipes to diff function
     if input.startswith("<@!"):
         author_id = int(''.join(filter(str.isdigit, input)))
         recipes = db.child("Recipes").order_by_child(
             "Author").equal_to(author_id).get()
-        print(recipes.val())
-        await interaction.send(f"TEST - recipe with author exists: {recipes.val()}")
+        our_recipe = recipes.val()
+        items = list(our_recipe.items())
+        print(items[0][1]["Author"])
+        embed = nextcord.Embed(
+            title=items[0][1]["Recipe"], description=items[0][1]["Ingredients"])
+        embed.add_field(
+            name='Instructions', value=items[0][1]["Instructions"], inline=False
+        )
+        embed.add_field(
+            name='Author', value=items[0][1]["Name"], inline=False
+        )
+        await interaction.send(embed=embed)
+        # await interaction.send(f"TEST - recipe with author exists")
     # TODO: Setup grabbing recipe using recipe
     else:
         await interaction.send("TEST - recipe with author exists")
@@ -125,12 +137,8 @@ async def find(interaction: nextcord.Interaction, *, input: str):
     #         "Author").equal_to(input).get()
 
     # if recipes > 0:
-    #     # TODO: setup embed with pages based on number of results from DB
-    #     await interaction.send("working.")
-    #     # embed = nextcord.Embed(
-    #     #     title="title", description="desc")
-    #     # embed.add_field(name="Name", value="field")
-    #     # await interaction.send(embed=embed)
+        # TODO: setup embed with pages based on number of results from DB
+        # await interaction.send("working.")
     # else:
     #     await interaction.send("Recipe with that author/name does not exist.")
 
@@ -148,7 +156,8 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
             "Ingredients": ingredient_list,
             "Instructions": instructions,
             "Date created": date,
-            "Author": user_id
+            "Author": user_id,
+            "Name": user
         }
         db.child("Recipes").child(f"{recipe_name} by {user}").set(data)
     except Exception as e:
