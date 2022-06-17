@@ -88,7 +88,8 @@ server = os.getenv("SERVER")
 bot = Bot(prefix)
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
-
+infodir = os.listdir()
+print(infodir)
 for fn in os.listdir("./cogs"):
     if fn.endswith(".py"):
         bot.load_extension(f"cogs.{fn[:-3]}")
