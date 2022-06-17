@@ -10,6 +10,5 @@ pip install python-dotenv
 ### Configuration
 
 - Insert your discord bot token and your server id into the .env
-
-* Insert your firebase config into the database.py
-* Run bot.py
+- Insert your firebase config into the database.py
+- Run bot.py
