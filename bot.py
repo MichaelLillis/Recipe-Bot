@@ -119,8 +119,15 @@ async def find(interaction: nextcord.Interaction, *, input: str):
         items = list(our_recipe.items())
         name_of_recipe = items[0][1]["Recipe"]
         recipe_author = items[0][1]["Name"]
+        recipe_ingredients = items[0][1]["Ingredients"]
+        ingredients = ' '
+        for x in recipe_ingredients:
+            if x != recipe_ingredients[-1]:
+                ingredients += x + ', '
+            else:
+                ingredients += x
         embed = nextcord.Embed(
-            title=name_of_recipe.capitalize(), description=items[0][1]["Ingredients"])
+            title=name_of_recipe.capitalize(), description=ingredients)
         embed.set_author(
             name=f"{name_of_recipe.capitalize()} by {recipe_author}"
         )
