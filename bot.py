@@ -109,7 +109,7 @@ async def unload(interaction: nextcord.Interaction, extension):
 @bot.command()
 async def reload(interaction: nextcord.Interaction, extension):
     bot.reload_extension(f"cogs.{extension}")
-    await interaction.send("Loaded cog")
+    await interaction.send("Reloaded cog")
 
 
 @bot.slash_command(
