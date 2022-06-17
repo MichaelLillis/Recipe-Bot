@@ -89,6 +89,28 @@ bot = Bot(prefix)
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 
+for fn in os.listdir("./cogs"):
+    if fn.endswith(".py"):
+        bot.load_extension(f"cogs.{fn[:-3]}")
+
+
+@bot.command()
+async def load(interaction: nextcord.Interaction, extension):
+    bot.load_extension(f"cogs.{extension}")
+    await interaction.send("Loaded cog")
+
+
+@bot.command()
+async def unload(interaction: nextcord.Interaction, extension):
+    bot.unload_extension(f"cogs.{extension}")
+    await interaction.send("Unloaded cog")
+
+
+@bot.command()
+async def reload(interaction: nextcord.Interaction, extension):
+    bot.reload_extension(f"cogs.{extension}")
+    await interaction.send("Loaded cog")
+
 
 @bot.slash_command(
     description="Add a recipe to the recipes list!",
