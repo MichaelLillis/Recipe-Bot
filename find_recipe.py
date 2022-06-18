@@ -1,4 +1,3 @@
-import pyrebase
 from create_recipe import db
 
 
