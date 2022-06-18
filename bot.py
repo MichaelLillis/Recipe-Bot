@@ -80,14 +80,6 @@ class Bot(nextcord.ext.commands.Bot):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
 
 
-load_dotenv()
-patch()
-prefix = os.getenv("PREFIX")
-token = os.getenv("TOKEN")
-server = os.getenv("SERVER")
-bot = Bot(prefix)
-
-
 @bot.slash_command(
     description="Add a recipe to the recipes list!",
     guild_ids=[int(server)],
@@ -154,6 +146,12 @@ async def find(interaction: nextcord.Interaction, *, input: str):
 
 # TODO: Get random recipe from database
 
+load_dotenv()
+patch()
+prefix = os.getenv("PREFIX")
+token = os.getenv("TOKEN")
+server = os.getenv("SERVER")
+bot = Bot(prefix)
 try:
     bot.run(token)
 except Exception as e:
