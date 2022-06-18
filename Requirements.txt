@@ -1,4 +1,0 @@
-#TODO: Add versions/other requirements 
-Nextcord~=
-python-dotenv~=
-FireBase~=
