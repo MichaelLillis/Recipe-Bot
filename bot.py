@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from requests_toolbelt import user_agent
 from database import patch
 from create_recipe import db, new_recipe, Success, Failed
+from find_recipe import recipe_find, separate_ingredients
 import string
 
 
@@ -80,6 +81,14 @@ class Bot(nextcord.ext.commands.Bot):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
 
 
+load_dotenv()
+patch()
+token = os.getenv("TOKEN")
+server = os.getenv("SERVER")
+prefix = os.getenv("PREFIX")
+bot = Bot(prefix)
+
+
 @bot.slash_command(
     description="Add a recipe to the recipes list!",
     guild_ids=[int(server)],
@@ -102,20 +111,10 @@ async def find(interaction: nextcord.Interaction, *, input: str):
     # TODO: Setup embeds with pages
     # TODO: setup functionality for querying the database - seperate getting recipes to diff function
     if input.startswith("<@!"):
-        author_id = int(''.join(filter(str.isdigit, input)))
-        recipes = db.child("Recipes").order_by_child(
-            "Author").equal_to(author_id).get()
-        our_recipe = recipes.val()
-        items = list(our_recipe.items())
+        items = recipe_find(input)
         name_of_recipe = items[0][1]["Recipe"]
         recipe_author = items[0][1]["Name"]
-        recipe_ingredients = items[0][1]["Ingredients"]
-        ingredients = ' '
-        for x in recipe_ingredients:
-            if x != recipe_ingredients[-1]:
-                ingredients += x + ', '
-            else:
-                ingredients += x
+        ingredients = separate_ingredients(items)
         embed = nextcord.Embed(
             title=name_of_recipe.capitalize(), description=ingredients)
         embed.set_author(
@@ -146,12 +145,6 @@ async def find(interaction: nextcord.Interaction, *, input: str):
 
 # TODO: Get random recipe from database
 
-load_dotenv()
-patch()
-prefix = os.getenv("PREFIX")
-token = os.getenv("TOKEN")
-server = os.getenv("SERVER")
-bot = Bot(prefix)
 try:
     bot.run(token)
 except Exception as e:
