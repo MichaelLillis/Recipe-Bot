@@ -116,7 +116,7 @@ async def find(interaction: nextcord.Interaction, *, input: str):
         for x in range(len(items)):
             name_of_recipe = items[x][1]["Recipe"]
             recipe_author = items[x][1]["Name"]
-            ingredients = items[x][1]
+            ingredients = items[x][1]["Ingredients"]
             sep = separate_ingredients(ingredients)
             embed = nextcord.Embed(
                 title=name_of_recipe.capitalize(), description=sep)

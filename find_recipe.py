@@ -11,8 +11,8 @@ def recipe_find(input: str) -> list:
     return items
 
 
-def separate_ingredients(items: dict) -> str:
-    recipe_ingredients = items["Ingredients"]
+def separate_ingredients(items: list) -> str:
+    recipe_ingredients = items
     ingredients = ' '
     for x in recipe_ingredients:
         if x != recipe_ingredients[-1]:
