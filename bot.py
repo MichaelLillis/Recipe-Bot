@@ -4,8 +4,8 @@ from nextcord.ext import menus
 import os
 from dotenv import load_dotenv
 from database import patch
-from find_recipe import recipe_find, separate_ingredients
-from modal import RecipeModal
+from src.find_recipe import recipe_find, separate_ingredients
+from src.modal import RecipeModal
 
 
 class Bot(nextcord.ext.commands.Bot):

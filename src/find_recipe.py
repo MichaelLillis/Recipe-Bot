@@ -1,4 +1,4 @@
-from create_recipe import db
+from src.create_recipe import db
 
 
 def recipe_find(input: str) -> list:

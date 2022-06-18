@@ -1,5 +1,5 @@
 from nextcord import ui, TextInputStyle, Interaction
-from create_recipe import new_recipe, Success, Failed
+from src.create_recipe import new_recipe, Success, Failed
 from datetime import datetime
 
 
