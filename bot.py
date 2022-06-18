@@ -6,7 +6,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from requests_toolbelt import user_agent
 from database import patch
-from create_recipe import db, new_recipe
+from create_recipe import db, new_recipe, Success, Failed
 import string
 
 
@@ -48,7 +48,7 @@ class RecipeModal(nextcord.ui.Modal):
         ingredient_list = self.ingredients.value.split(", ")
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        new_recipe(
+        Add = new_recipe(
             self.recipe_title.value,
             ingredient_list,
             self.instructions.value,
@@ -56,10 +56,14 @@ class RecipeModal(nextcord.ui.Modal):
             interaction.user.display_name,
             interaction.user.id
         )
-        # TODO: Setup 'failed' message for user
-        await interaction.send(
-            f"Recipe added!"
-        )
+        if Add == True:
+            await interaction.send(
+                f"{Success}"
+            )
+        else:
+            await interaction.send(
+                f"{Failed}"
+            )
 
 
 class Bot(nextcord.ext.commands.Bot):
