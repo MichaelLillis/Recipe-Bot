@@ -5,7 +5,7 @@
 <img src="https://user-images.githubusercontent.com/36655595/174419643-1e767604-7fcf-4503-b385-a650f211bf34.png" img align="right" width=25%>
 
 ## Installation 💻
-Run the following commands in terminal/command prompt.
+Run the following commands in terminal/command prompt:
 <pre><code>pip install pyrebase4
 pip install nextcord
 pip install python-dotenv
