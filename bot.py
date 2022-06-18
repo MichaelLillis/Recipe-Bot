@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import nextcord
 import nextcord.ext.commands
+from nextcord.ext import menus
 import os
 from datetime import datetime
 from dotenv import load_dotenv
@@ -112,21 +113,24 @@ async def find(interaction: nextcord.Interaction, *, input: str):
     # TODO: setup functionality for querying the database - seperate getting recipes to diff function
     if input.startswith("<@!"):
         items = recipe_find(input)
-        name_of_recipe = items[0][1]["Recipe"]
-        recipe_author = items[0][1]["Name"]
-        ingredients = separate_ingredients(items)
-        embed = nextcord.Embed(
-            title=name_of_recipe.capitalize(), description=ingredients)
-        embed.set_author(
-            name=f"{name_of_recipe.capitalize()} by {recipe_author}"
-        )
-        embed.add_field(
-            name='Instructions', value=items[0][1]["Instructions"], inline=False
-        )
-        embed.add_field(
-            name='Author', value=items[0][1]["Name"], inline=False
-        )
-        await interaction.send(embed=embed)
+        for x in range(len(items)):
+            name_of_recipe = items[x][1]["Recipe"]
+            recipe_author = items[x][1]["Name"]
+            ingredients = items[x][1]
+            sep = separate_ingredients(ingredients)
+            embed = nextcord.Embed(
+                title=name_of_recipe.capitalize(), description=sep)
+            embed.set_author(
+                name=f"{name_of_recipe.capitalize()} by {recipe_author}"
+            )
+            embed.add_field(
+                name='Instructions', value=items[x][1]["Instructions"], inline=False
+            )
+            embed.add_field(
+                name='Author', value=items[x][1]["Name"], inline=False
+            )
+            await interaction.send(embed=embed)
+
         # await interaction.send(f"TEST - recipe with author exists")
     # TODO: Setup grabbing recipe using recipe
     else:
