@@ -1,71 +1,11 @@
-from dataclasses import dataclass
 import nextcord
 import nextcord.ext.commands
 from nextcord.ext import menus
 import os
-from datetime import datetime
 from dotenv import load_dotenv
-from requests_toolbelt import user_agent
 from database import patch
-from create_recipe import db, new_recipe, Success, Failed
 from find_recipe import recipe_find, separate_ingredients
-import string
-
-
-class RecipeModal(nextcord.ui.Modal):
-    def __init__(self):
-        super().__init__(
-            title="Recipes",
-            timeout=None,
-            custom_id="persistent_modal:Recipes",
-        )
-
-        self.recipe_title = nextcord.ui.TextInput(
-            label="Recipe Title",
-            placeholder="e.g. Good Old Fashioned Pancakes!",
-            required=True,
-            style=nextcord.TextInputStyle.short,
-            custom_id="persistent_modal:recipe_title",
-        )
-        self.add_item(self.recipe_title)
-
-        self.ingredients = nextcord.ui.TextInput(
-            label="List of recipe ingredients",
-            placeholder="1½ cups all-purpose flour, 3½ teaspoons baking powder¼ teaspoon salt or more to taste...",
-            required=True,
-            custom_id="persistent_modal:ingredients",
-        )
-        self.add_item(self.ingredients)
-
-        self.instructions = nextcord.ui.TextInput(
-            label="How to make the recipe",
-            placeholder="e.g. Step 1 In a large bowl, sift together the flour...",
-            style=nextcord.TextInputStyle.paragraph,
-            required=True,
-            custom_id="persistent_modal:instructions",
-        )
-        self.add_item(self.instructions)
-
-    async def callback(self, interaction: nextcord.Interaction):
-        ingredient_list = self.ingredients.value.split(", ")
-        now = datetime.now()
-        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        Add = new_recipe(
-            self.recipe_title.value,
-            ingredient_list,
-            self.instructions.value,
-            date_time,
-            interaction.user.display_name,
-            interaction.user.id
-        )
-        if Add == True:
-            await interaction.send(
-                f"{Success}"
-            )
-        else:
-            await interaction.send(
-                f"{Failed}"
-            )
+from modal import RecipeModal
 
 
 class Bot(nextcord.ext.commands.Bot):
@@ -78,7 +18,6 @@ class Bot(nextcord.ext.commands.Bot):
         if not self.persistent_modals_added:
             self.add_modal(RecipeModal())
             self.persistent_modals_added = True
-
         print(f"Logged in as {self.user} (ID: {self.user.id})")
 
 
