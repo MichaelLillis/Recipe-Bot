@@ -1,17 +1,13 @@
-from cmath import rect
 from dataclasses import dataclass
-import re
 import nextcord
 import nextcord.ext.commands
 import os
-from datetime import date, datetime
-import pyrebase
+from datetime import datetime
 from dotenv import load_dotenv
 from requests_toolbelt import user_agent
-from database import firebaseConfig, patch
+from database import patch
+from create_recipe import db, new_recipe
 import string
-
-# TODO Modal
 
 
 class RecipeModal(nextcord.ui.Modal):
@@ -86,31 +82,6 @@ prefix = os.getenv("PREFIX")
 token = os.getenv("TOKEN")
 server = os.getenv("SERVER")
 bot = Bot(prefix)
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
-infodir = os.listdir()
-print(infodir)
-for fn in os.listdir("./cogs"):
-    if fn.endswith(".py"):
-        bot.load_extension(f"cogs.{fn[:-3]}")
-
-
-@bot.command()
-async def load(interaction: nextcord.Interaction, extension):
-    bot.load_extension(f"cogs.{extension}")
-    await interaction.send("Loaded cog")
-
-
-@bot.command()
-async def unload(interaction: nextcord.Interaction, extension):
-    bot.unload_extension(f"cogs.{extension}")
-    await interaction.send("Unloaded cog")
-
-
-@bot.command()
-async def reload(interaction: nextcord.Interaction, extension):
-    bot.reload_extension(f"cogs.{extension}")
-    await interaction.send("Reloaded cog")
 
 
 @bot.slash_command(
@@ -178,29 +149,6 @@ async def find(interaction: nextcord.Interaction, *, input: str):
 
 
 # TODO: Get random recipe from database
-
-# Grab user using interaction, and use the user ID for the author in the db, and the displayname for the child title
-def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str, user_id: int):
-    try:
-        ingredient_list = cap(ingredient_list)
-
-# TODO change 'Author' to an int
-        data = {
-            "Recipe": recipe_name,
-            "Ingredients": ingredient_list,
-            "Instructions": instructions,
-            "Date created": date,
-            "Author": user_id,
-            "Name": user
-        }
-        db.child("Recipes").child(f"{recipe_name} by {user}").set(data)
-    except Exception as e:
-        print(f"Error - Data Entry Add Failed: {e}")
-
-
-def cap(words) -> list:
-    return [s.capitalize() for s in words]
-
 
 try:
     bot.run(token)
