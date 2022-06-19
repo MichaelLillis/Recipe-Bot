@@ -41,6 +41,8 @@ Recipe bot is very simple to use! There are only 3 commands you'll need to know.
 
 ## Screen Shots 📷
 
+<img src="https://i.gyazo.com/2cd67633bba268047e09257c937000dc.png" img align="left">
+
 ## Links 🔗
 
 > [Firebase - Free database hosting/handling+](https://firebase.google.com/)
