@@ -1,5 +1,4 @@
 from nextcord import Embed, Interaction
-from nextcord.ext import commands
 from src.find_recipe import separate_ingredients
 import asyncio
 

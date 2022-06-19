@@ -1,9 +1,5 @@
-import asyncio
-from asyncio.windows_events import NULL
-from email import message
 import nextcord
 import nextcord.ext.commands
-# from nextcord.ext import menus
 import nextcord.ext
 import os
 from dotenv import load_dotenv
@@ -41,9 +37,11 @@ bot = Bot(prefix)
 async def recipe(interaction: nextcord.Interaction):
     pass
 
+
 @recipe.subcommand(description="Add a recipe to the recipe list")
 async def add(interaction: nextcord.Interaction):
     await interaction.response.send_modal(RecipeModal())
+
 
 @recipe.subcommand(description="Find a specific recipe")
 async def find(interaction: nextcord.Interaction, *, input: str):
