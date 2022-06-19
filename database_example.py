@@ -1,7 +1,8 @@
 import pyrebase
-from urllib.parse import quote
 
 # Temporary fix until this bug is fixed
+
+
 def patch():
     from urllib.parse import quote
     # Monkey patch pyrebase: replace quote function in pyrebase to workaround a bug.
