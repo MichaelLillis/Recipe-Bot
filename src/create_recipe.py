@@ -3,8 +3,10 @@ from database import firebaseConfig
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
-Success = "Data entry added!"
-Failed = "Error - Data Entry Add Failed:"
+Success = "Recipe added!"
+Failed = "Error - Recipe Add Failed:"
+
+
 def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str, user_id: int) -> bool:
     try:
         ingredient_list = cap(ingredient_list)
