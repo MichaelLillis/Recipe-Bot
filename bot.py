@@ -1,6 +1,10 @@
+import asyncio
+from asyncio.windows_events import NULL
+from email import message
 import nextcord
 import nextcord.ext.commands
-from nextcord.ext import menus
+# from nextcord.ext import menus
+import nextcord.ext
 import os
 from dotenv import load_dotenv
 from database import patch
@@ -50,40 +54,69 @@ async def add(interaction: nextcord.Interaction):
 async def find(interaction: nextcord.Interaction, *, input: str):
     # TODO: Setup embeds with pages
     # TODO: setup functionality for querying the database - seperate getting recipes to diff function
-    if input.startswith("<@!"):
-        items = recipe_find(input)
-        for x in range(len(items)):
-            name_of_recipe = items[x][1]["Recipe"]
-            recipe_author = items[x][1]["Name"]
-            ingredients = items[x][1]["Ingredients"]
-            sep = separate_ingredients(ingredients)
-            embed = nextcord.Embed(
-                title=name_of_recipe.capitalize(), description=sep)
-            embed.set_author(
-                name=f"{name_of_recipe.capitalize()} by {recipe_author}"
-            )
-            embed.add_field(
-                name='Instructions', value=items[x][1]["Instructions"], inline=False
-            )
-            embed.add_field(
-                name='Author', value=items[x][1]["Name"], inline=False
-            )
-            await interaction.send(embed=embed)
 
-        # await interaction.send(f"TEST - recipe with author exists")
-    # TODO: Setup grabbing recipe using recipe
+    items = recipe_find(input)
+    if items == 0:
+        await interaction.send("A recipe with this user or recipe name does not exist.")
     else:
-        await interaction.send("TEST - recipe with author exists")
+        await create_embed(interaction, items)
 
-    # else:
-    #     recipes = db.child("Recipes").order_by_child(
-    #         "Author").equal_to(input).get()
 
-    # if recipes > 0:
-        # TODO: setup embed with pages based on number of results from DB
-        # await interaction.send("working.")
-    # else:
-    #     await interaction.send("Recipe with that author/name does not exist.")
+def create_recipe(interation: nextcord.Interaction, items: list) -> nextcord.Embed:
+    pages = []
+    for item in range(len(items)):
+        name_of_recipe = items[item][1]["Recipe"]
+        recipe_author = items[item][1]["Name"]
+        ingredients = items[item][1]["Ingredients"]
+        sep = separate_ingredients(ingredients)
+        embed = nextcord.Embed(
+            title=name_of_recipe.capitalize(), description=sep)
+        embed.set_author(
+            name=f"{name_of_recipe.capitalize()} by {recipe_author}"
+        )
+        embed.add_field(
+            name='Instructions', value=items[item][1]["Instructions"], inline=False
+        )
+        embed.add_field(
+            name='Author', value=items[item][1]["Name"], inline=False
+        )
+        pages.append(embed)
+
+    buttons = [u"\u23EA", u"\u2B05", u"\u27A1", u"\u23E9"]
+    current = 0
+    msg = await interaction.channel.send(embed=pages[current])
+
+    for button in buttons:
+        await msg.add_reaction(button)
+
+    while True:
+        try:
+            reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == interaction.user and reaction.emoji in buttons, timeout=60.0)
+
+        except asyncio.TimeoutError:
+            return print("Recipe has timed out.")
+
+        else:
+            previous_page = current
+            if reaction.emoji == u"\u23EA":
+                current = 0
+
+            elif reaction.emoji == u"\u2B05":
+                if current > 0:
+                    current -= 1
+
+            elif reaction.emoji == u"\u27A1":
+                if current < len(pages)-1:
+                    current += 1
+
+            elif reaction.emoji == u"\u23E9":
+                current = len(pages)-1
+
+            for button in buttons:
+                await msg.remove_reaction(button, interaction.user)
+
+            if current != previous_page:
+                await msg.edit(embed=pages[current])
 
 
 # TODO: Get random recipe from database
