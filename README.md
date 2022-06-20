@@ -46,7 +46,8 @@ Recipe bot is very simple to use! There are only a few basic commands you'll nee
 ## Screen Shots 📷
 
 ![blpow1g](https://user-images.githubusercontent.com/36655595/174545237-1b7c5cd3-6c96-4c35-bde8-1394a82c8550.png)
-![es683uI](https://user-images.githubusercontent.com/36655595/174545649-1cdceb1f-123e-4cfc-9dfb-145bc0942bae.png)
+![jk4KU4y](https://user-images.githubusercontent.com/36655595/174545868-64e6ed56-78bd-41d8-8a86-2c445241689d.png)
+
 
 
 ## Links 🔗
