@@ -21,7 +21,7 @@ pip install python-dotenv
 • Insert your discord bot token and your server id into the .env  
 • Follow the [Firebase documentation](https://cloud.google.com/firestore/docs/client/get-firebase) to setup your database config for the _database.py_  
 • Replace the firebase config in the _database.py_ file with yours  
-• Run bot.py
+• Run main.py
 
 ## Commands 📝
 
