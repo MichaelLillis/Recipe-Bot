@@ -27,8 +27,6 @@ def recipe_delete(input: str, id: int, user: str) -> bool:
         items = list(our_recipe.items())
     except:
         end = False
-        return end
-
     if id == items[0][1]["Author"]:
         try:
             db.child("Recipes").child(
@@ -38,6 +36,7 @@ def recipe_delete(input: str, id: int, user: str) -> bool:
             return end
     else:
         end = False
+
     return end
 
 
