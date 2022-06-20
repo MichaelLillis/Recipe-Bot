@@ -3,7 +3,7 @@ import nextcord
 import string
 from src.find_recipe import separate_ingredients
 import asyncio
-
+ 
 
 async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
     pages = []
