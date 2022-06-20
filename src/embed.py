@@ -27,37 +27,41 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
         await interaction.send(embed=pages[0])
     else:
         buttons = [u"\u23EA", u"\u2B05", u"\u27A1", u"\u23E9"]
-        current = 0
-        msg = await interaction.channel.send(embed=pages[current])
+        current_page = 0
+        msg = await interaction.channel.send(embed=pages[current_page])
 
         for button in buttons:
             await msg.add_reaction(button)
 
         while True:
             try:
-                reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == interaction.user and reaction.emoji in buttons, timeout=300.0)
+                reaction, user = await bot.wait_for(
+                    "reaction_add",
+                    check=lambda reaction,
+                    user: user == interaction.user and reaction.emoji in buttons,
+                    timeout=300.0)
 
             except asyncio.TimeoutError:
                 return print("Recipe has timed out.")
 
             else:
-                previous_page = current
+                previous_page = current_page
                 if reaction.emoji == u"\u23EA":
-                    current = 0
+                    current_page = 0
 
                 elif reaction.emoji == u"\u2B05":
-                    if current > 0:
-                        current -= 1
+                    if current_page > 0:
+                        current_page -= 1
 
                 elif reaction.emoji == u"\u27A1":
-                    if current < len(pages)-1:
-                        current += 1
+                    if current_page < len(pages)-1:
+                        current_page += 1
 
                 elif reaction.emoji == u"\u23E9":
-                    current = len(pages)-1
+                    current_page = len(pages)-1
 
                 for button in buttons:
                     await msg.remove_reaction(button, interaction.user)
 
-                if current != previous_page:
-                    await msg.edit(embed=pages[current])
+                if current_page != previous_page:
+                    await msg.edit(embed=pages[current_page])
