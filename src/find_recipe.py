@@ -8,7 +8,7 @@ def recipe_find(input: str) -> list:
             recipes = db.child("Recipes").order_by_child(
                 "Author").equal_to(author_id).get()
         else:
-            recipe_name = input.capitalize()
+            recipe_name = input.lower()
             recipes = db.child("Recipes").order_by_child(
                 "Recipe").equal_to(recipe_name).get()
         our_recipe = recipes.val()
