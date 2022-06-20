@@ -1,3 +1,4 @@
+from string import capwords
 from src.create_recipe import db
 
 
@@ -18,24 +19,26 @@ def recipe_find(input: str) -> list:
         return 0
 
 
-def recipe_delete(input: str, id: int, user: str) -> bool:
-    end = True
+def recipe_delete(input: str, user_id: int, user: str) -> str:
     try:
         recipes = db.child("Recipes").order_by_child(
             "Recipe").equal_to(input).get()
         our_recipe = recipes.val()
         items = list(our_recipe.items())
+
+        if user_id == items[0][1]["Author"]:
+            try:
+                db.child("Recipes").child(
+                    f"{input} by {user}").remove()
+                end = f"\"{capwords(input)}\" has been deleted!"
+            except:
+                end = f"You do not have a recipe with the name \"{input}\"."
+                return end
+        else:
+            end = f"You do not own the recipe \"{input}\"."
+
     except:
-        end = False
-    if id == items[0][1]["Author"]:
-        try:
-            db.child("Recipes").child(
-                f"{input} by {user}").remove()
-        except:
-            end = False
-            return end
-    else:
-        end = False
+        end = f"No recipes with the name \"{input}\" exist."
 
     return end
 

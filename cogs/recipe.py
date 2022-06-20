@@ -1,4 +1,3 @@
-from email import message
 import nextcord
 from nextcord.ext import commands
 from src.modal import RecipeModal
@@ -35,12 +34,9 @@ class Recipe(commands.Cog):
 
     @recipe.subcommand(description="Find a specific recipe")
     async def delete(self, interaction: nextcord.Interaction, *, input: str):
-        check = recipe_delete(input, interaction.user.id,
-                              interaction.user.display_name)
-        if check == False:
-            await interaction.send("A recipe with this user or recipe name does not exist.")
-        else:
-            await interaction.send("Recipe deleted!")
+        msg = recipe_delete(
+            input.lower(), interaction.user.id, interaction.user.display_name)
+        await interaction.send(msg)
 
     @recipe.subcommand(description="Return all recipes")
     async def all(self, interaction: nextcord.Interaction):
