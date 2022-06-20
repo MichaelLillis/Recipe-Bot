@@ -1,6 +1,6 @@
 import pyrebase
 
-
+ 
 def patch():
     from urllib.parse import quote
     # Monkey patch pyrebase: replace quote function in pyrebase to workaround a bug.
@@ -31,3 +31,4 @@ firebaseConfig = {
     "appId": "1: 11111111111111: web: xxxxxxxxxxxxxxxxxxxxxx",
     "measurementId": "xxxxxxxxxxxxxxxxxxx"
 }
+ 

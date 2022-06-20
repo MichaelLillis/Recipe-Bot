@@ -3,7 +3,7 @@
 > Recipe Bot is a [Discord](https://discord.com/) Bot created using [Python](https://docs.python.org/3/), [Firebase](https://firebase.google.com/) for database handling, and [Nextcord](https://docs.nextcord.dev/en/stable/) as a Discord API wrapper.
 
 #
-
+  
 <img src="https://user-images.githubusercontent.com/36655595/174419643-1e767604-7fcf-4503-b385-a650f211bf34.png" img align="right" width=25%>
 
 ## Installation 💻
@@ -21,7 +21,7 @@ pip install python-dotenv
 • Insert your discord bot token and your server id into the .env  
 • Follow the [Firebase documentation](https://cloud.google.com/firestore/docs/client/get-firebase) to setup your database config for the _database.py_  
 • Replace the firebase config in the _database.py_ file with yours  
-• Run bot.py
+• Run main.py
 
 ## Commands 📝
 
@@ -45,7 +45,9 @@ Recipe bot is very simple to use! There are only a few basic commands you'll nee
 
 ## Screen Shots 📷
 
-<img src="https://i.gyazo.com/2cd67633bba268047e09257c937000dc.png">
+![7uQqxXB](https://user-images.githubusercontent.com/36655595/174539407-d8561d86-58d0-407a-898a-09c52d7487e6.png)
+
+![jcq5mFE](https://user-images.githubusercontent.com/36655595/174540186-7f34455b-c10f-4b82-893d-738e35e37d4e.png)
 
 ## Links 🔗
 

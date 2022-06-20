@@ -2,7 +2,7 @@ from nextcord import ui, TextInputStyle, Interaction
 from src.create_recipe import new_recipe, Success, Failed
 from datetime import datetime
 
-
+ 
 class RecipeModal(ui.Modal):
     def __init__(self):
         super().__init__(
