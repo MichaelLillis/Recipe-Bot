@@ -11,7 +11,6 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
     try:
         ingredient_list = cap(ingredient_list)
         recipe_name = recipe_name.lower()
-        recipe_and_author = recipe_name+str(user_id)
         data = {
             "Recipe": recipe_name,
             "Ingredients": ingredient_list,
@@ -19,7 +18,6 @@ def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, 
             "Date created": date,
             "Author": user_id,
             "Name": user,
-            "RecipeAndAuthor": recipe_and_author
         }
         db.child("Recipes").child(f"{recipe_name} by {user}").set(data)
         print(Success)
