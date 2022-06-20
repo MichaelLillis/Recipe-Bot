@@ -25,7 +25,7 @@ pip install python-dotenv
 
 ## Commands 📝
 
-Recipe bot is very simple to use! There are only 3 commands you'll need to know.
+Recipe bot is very simple to use! There are only a few basic commands you'll need to know.
 
 ##### Add a recipe through the modal popup:
 
