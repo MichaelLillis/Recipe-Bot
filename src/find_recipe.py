@@ -20,13 +20,19 @@ def recipe_find(input: str) -> list:
 
 def recipe_delete(input: str, id: int) -> bool:
     end = True
-    input = input + "-" + str(id)
     try:
-        db.child("Recipes").order_by_child(
-            "Recipe-Author").equal_to(input).remove()
+        recipes = db.child("Recipes").order_by_child(
+            "Recipe").equal_to(input).get()
     except:
         end = False
         return end
+    if id == recipes[1]["Author"]:
+        try:
+            db.child("Recipes").child(
+                input).remove()
+        except:
+            end = False
+            return end
     return end
 
 
