@@ -1,3 +1,4 @@
+from email import message
 import nextcord
 from nextcord.ext import commands
 from src.modal import RecipeModal
@@ -42,12 +43,14 @@ class Recipe(commands.Cog):
 
     @recipe.subcommand(description="Return all recipes")
     async def all(self, interaction: nextcord.Interaction):
-        recipes = db.child("Recipes").order_by_child(
-            "Recipe").get()
-        our_recipe = recipes.val()
-        items = list(our_recipe.items())
-
-        await create_embed(self.bot, interaction, items)
+        try:
+            recipes = db.child("Recipes").order_by_child(
+                "Recipe").get()
+            our_recipe = recipes.val()
+            items = list(our_recipe.items())
+            await create_embed(self.bot, interaction, items)
+        except:
+            await interaction.send("No recipes exist in the database.")
 
 
 def setup(bot):
