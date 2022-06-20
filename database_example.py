@@ -1,15 +1,11 @@
 import pyrebase
 
-# Temporary fix until this bug is fixed
-
 
 def patch():
     from urllib.parse import quote
     # Monkey patch pyrebase: replace quote function in pyrebase to workaround a bug.
     # See https://github.com/thisbejim/Pyrebase/issues/294.
     pyrebase.pyrebase.quote = lambda s, safe=None: s
-
-    # Monkey patch pyrebase: the Storage.get_url method does need quoting :|
 
     def get_url(self, token=None):
         path = self.path

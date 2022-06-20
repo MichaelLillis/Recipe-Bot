@@ -4,7 +4,7 @@ from database import firebaseConfig
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 Success = "Recipe added!"
-Failed = "Error - Recipe Add Failed. Make sure you don't already have a recipe with this name!"
+Failed = "Error - Recipe Add Failed. Make sure you don't already have a recipe with this name."
 
 
 def new_recipe(recipe_name: str, ingredient_list: list[str], instructions: str, date: str, user: str, user_id: int) -> bool:

@@ -13,7 +13,7 @@ class RecipeModal(ui.Modal):
 
         self.recipe_title = ui.TextInput(
             label="Recipe Title",
-            placeholder="e.g. Good Old Fashioned Pancakes!",
+            placeholder="Good Old Fashioned Pancakes!",
             required=True,
             style=TextInputStyle.short,
             custom_id="persistent_modal:recipe_title",
@@ -39,8 +39,7 @@ class RecipeModal(ui.Modal):
 
     async def callback(self, interaction: Interaction):
         ingredient_list = self.ingredients.value.split(", ")
-        now = datetime.now()
-        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         Add = new_recipe(
             self.recipe_title.value,
             ingredient_list,
@@ -49,7 +48,7 @@ class RecipeModal(ui.Modal):
             interaction.user.display_name,
             interaction.user.id
         )
-        if Add == True:
+        if Add:
             await interaction.send(
                 f"{Success}"
             )
