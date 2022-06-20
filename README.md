@@ -35,9 +35,9 @@ Recipe bot is very simple to use! There are only 3 commands you'll need to know.
 
 > /Recipe find [user or recipe name]
 
-##### Find a random recipe in the database:
+##### Return all recipes:
 
-> /Recipe random
+> /Recipe all
 
 ## Screen Shots 📷
 
