@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from database import patch
 from src.modal import RecipeModal
 
- 
+  
 class Bot(nextcord.ext.commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
