@@ -18,18 +18,20 @@ def recipe_find(input: str) -> list:
         return 0
 
 
-def recipe_delete(input: str, id: int) -> bool:
+def recipe_delete(input: str, id: int, user: str) -> bool:
     end = True
     try:
         recipes = db.child("Recipes").order_by_child(
-            "Recipe").equal_to(input).get()
+            "Recipe").equal_to(input).get()        
+        our_recipe = recipes.val()
+        items = list(our_recipe.items())
     except:
         end = False
         return end
-    if id == recipes[1]["Author"]:
+    if id == items[0][1]["Author"]:
         try:
             db.child("Recipes").child(
-                input).remove()
+                f"{input} by {user}").remove()
         except:
             end = False
             return end

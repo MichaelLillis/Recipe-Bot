@@ -35,7 +35,7 @@ class Recipe(commands.Cog):
 
     @recipe.subcommand(description="Find a specific recipe")
     async def delete(self, interaction: nextcord.Interaction, *, input: str):
-        check = recipe_delete(input, interaction.user.id)
+        check = recipe_delete(input, interaction.user.id, interaction.user)
         if check == False:
             await interaction.send("A recipe with this user or recipe name does not exist.")
         else:
