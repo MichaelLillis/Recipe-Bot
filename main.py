@@ -4,9 +4,7 @@ import nextcord.ext
 import os
 from dotenv import load_dotenv
 from database import patch
-from src.find_recipe import recipe_find
 from src.modal import RecipeModal
-from src.embed import create_embed
 
 
 class Bot(nextcord.ext.commands.Bot):
@@ -25,31 +23,16 @@ class Bot(nextcord.ext.commands.Bot):
 load_dotenv()
 patch()
 token = os.getenv("TOKEN")
-server = os.getenv("SERVER")
 prefix = os.getenv("PREFIX")
 bot = Bot(prefix)
+cog_list = []
+for fn in os.listdir("./cogs"):
+    if fn.endswith(".py"):
+        cog_list.append(f"cogs.{fn[:-3]}")
 
-
-@bot.slash_command(
-    description="Add a recipe to the recipes list!",
-    guild_ids=[int(server)],
-)
-async def recipe(interaction: nextcord.Interaction):
-    pass
-
-
-@recipe.subcommand(description="Add a recipe to the recipe list")
-async def add(interaction: nextcord.Interaction):
-    await interaction.response.send_modal(RecipeModal())
-
-
-@recipe.subcommand(description="Find a specific recipe")
-async def find(interaction: nextcord.Interaction, *, input: str):
-    items = recipe_find(input)
-    if items == 0:
-        await interaction.send("A recipe with this user or recipe name does not exist.")
-    else:
-        await create_embed(bot, interaction, items)
+if __name__ == '__main__':
+    for cogs in cog_list:
+        bot.load_extension(cogs)
 
 # TODO: Get random recipe from database
 
