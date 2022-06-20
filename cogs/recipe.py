@@ -1,7 +1,7 @@
 import nextcord
 from nextcord.ext import commands
 from src.modal import RecipeModal
-from src.find_recipe import recipe_find
+from src.find_recipe import recipe_delete, recipe_find
 from src.embed import create_embed
 import os
 server = os.getenv("SERVER")
@@ -29,6 +29,14 @@ class Recipe(commands.Cog):
             await interaction.send("A recipe with this user or recipe name does not exist.")
         else:
             await create_embed(self.bot, interaction, items)
+
+    @recipe.subcommand(description="Find a specific recipe")
+    async def delete(self, interaction: nextcord.Interaction, *, input: str):
+        check = recipe_delete(input, interaction.user.id)
+        if check == False:
+            await interaction.send("A recipe with this user or recipe name does not exist.")
+        else:
+            await interaction.send("Recipe deleted!")
 
 
 def setup(bot):

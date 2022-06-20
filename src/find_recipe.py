@@ -18,6 +18,24 @@ def recipe_find(input: str) -> list:
         return 0
 
 
+def recipe_delete(input: str, id: int) -> bool:
+    end = True
+    try:
+        recipes = db.child("Recipes").order_by_child(
+            "Recipe").equal_to(input).get()
+    except:
+        end = False
+        return end
+    if id == recipes[1]["Author"]:
+        try:
+            db.child("Recipes").order_by_child(
+                "Author").remove()
+        except:
+            end = False
+            return end
+    return end
+
+
 def separate_ingredients(items: list) -> str:
     recipe_ingredients = items
     ingredients = ' '
