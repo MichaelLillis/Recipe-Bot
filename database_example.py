@@ -1,6 +1,6 @@
 import pyrebase
 
-
+ 
 def patch():
     from urllib.parse import quote
     # Monkey patch pyrebase: replace quote function in pyrebase to workaround a bug.
