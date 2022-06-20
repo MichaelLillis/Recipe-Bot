@@ -32,7 +32,7 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
 
         for button in buttons:
             await msg.add_reaction(button)
-
+ 
         while True:
             try:
                 reaction, user = await bot.wait_for(
