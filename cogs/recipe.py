@@ -32,7 +32,6 @@ class Recipe(commands.Cog):
         else:
             await create_embed(self.bot, interaction, items)
 
-<<<<<<< HEAD
     @recipe.subcommand(description="Find a specific recipe")
     async def delete(self, interaction: nextcord.Interaction, *, input: str):
         check = recipe_delete(input, interaction.user.id)
@@ -40,7 +39,7 @@ class Recipe(commands.Cog):
             await interaction.send("A recipe with this user or recipe name does not exist.")
         else:
             await interaction.send("Recipe deleted!")
-=======
+
     @recipe.subcommand(description="Return all recipes")
     async def all(self, interaction: nextcord.Interaction):
         recipes = db.child("Recipes").order_by_child(
@@ -49,7 +48,6 @@ class Recipe(commands.Cog):
         items = list(our_recipe.items())
 
         await create_embed(self.bot, interaction, items)
->>>>>>> 253844d9504461a26ac2da29ab81b07bcb0ff642
 
 
 def setup(bot):
