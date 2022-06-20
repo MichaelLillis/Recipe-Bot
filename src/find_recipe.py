@@ -1,7 +1,7 @@
 from string import capwords
 from src.create_recipe import db
 
-
+ 
 def recipe_find(input: str) -> list:
     try:
         if input.startswith("<@!"):
