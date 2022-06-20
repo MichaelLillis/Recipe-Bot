@@ -4,6 +4,8 @@ from src.modal import RecipeModal
 from src.find_recipe import recipe_find
 from src.embed import create_embed
 import os
+from src.create_recipe import db
+
 server = os.getenv("SERVER")
 
 
@@ -29,6 +31,15 @@ class Recipe(commands.Cog):
             await interaction.send("A recipe with this user or recipe name does not exist.")
         else:
             await create_embed(self.bot, interaction, items)
+
+    @recipe.subcommand(description="Return all recipes")
+    async def all(self, interaction: nextcord.Interaction):
+        recipes = db.child("Recipes").order_by_child(
+            "Recipe").get()
+        our_recipe = recipes.val()
+        items = list(our_recipe.items())
+
+        await create_embed(self.bot, interaction, items)
 
 
 def setup(bot):

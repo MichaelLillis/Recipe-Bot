@@ -34,8 +34,6 @@ if __name__ == '__main__':
     for cogs in cog_list:
         bot.load_extension(cogs)
 
-# TODO: Get random recipe from database
-
 try:
     bot.run(token)
 except Exception as e:
