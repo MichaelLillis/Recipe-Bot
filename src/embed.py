@@ -1,4 +1,3 @@
-from cgi import print_arguments
 from nextcord import Embed, Interaction
 import nextcord
 import string
