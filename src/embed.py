@@ -1,3 +1,4 @@
+from array import array
 from nextcord import Embed, Interaction
 import nextcord
 import string
@@ -23,42 +24,13 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
             embed.add_field(
                 name='Instructions', value=instructions, inline=False
             )
-        elif len(instructions) > 1024 and len(instructions) < 2047:
-            s1 = instructions[:len(
-                instructions)//2]
-            s2 = instructions[len(
-                instructions)//2:]
-
+        else:
+            s1 = divide(instructions)
             embed.add_field(
-                name='Instructions 1/2', value=s1, inline=False
+                name='Instructions 1/2', value=s1[0], inline=False
             )
             embed.add_field(
-                name='Instructions 2/2', value=s2, inline=False
-            )
-        elif len(instructions) > 2048:
-            s1 = instructions[:len(
-                instructions)//2]
-            s2 = instructions[len(
-                instructions)//2:]
-            s3 = s1[:len(
-                s1)//2]
-            s4 = s2[:len(
-                s2)//2]
-            s5 = s1[len(
-                s1)//2:]
-            s6 = s2[len(
-                s2)//2:]
-            embed.add_field(
-                name='Instructions 1/4', value=s3, inline=False
-            )
-            embed.add_field(
-                name='Instructions 2/4', value=s5, inline=False
-            )
-            embed.add_field(
-                name='Instructions 3/4', value=s4, inline=False
-            )
-            embed.add_field(
-                name='Instructions 4/4', value=s6, inline=False
+                name='Instructions 2/2', value=s1[1], inline=False
             )
         pages.append(embed)
 
@@ -104,3 +76,9 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
 
                 if current_page != previous_page:
                     await msg.edit(embed=pages[current_page])
+
+
+def divide(words: str) -> array:
+    s1 = words[:len(words)//2]
+    s2 = words[len(words)//2:]
+    return [s1, s2]

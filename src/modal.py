@@ -32,6 +32,7 @@ class RecipeModal(ui.Modal):
         self.instructions = ui.TextInput(
             label="How to make the recipe",
             placeholder="Step 1: Add flour into a large bowl. Step 2: Add the eggs...",
+            max_length=2000,
             style=TextInputStyle.paragraph,
             required=True,
             custom_id="persistent_modal:instructions",
