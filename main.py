@@ -31,7 +31,7 @@ cog_list = []
 for fn in os.listdir("./cogs"):
     if fn.endswith(".py"):
         cog_list.append(f"cogs.{fn[:-3]}")
-bot.load_extension("cogs.setup.py")
+bot.load_extension("./cogs.setup.py")
 
 
 @bot.slash_command(
