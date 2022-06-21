@@ -17,7 +17,7 @@ class Recipe(commands.Cog):
         description="Add a recipe to the recipes list!",
         guild_ids=[int(server)],
     )
-    async def recipe(self, interaction: nextcord.Interaction):
+    async def recipe(self):
         pass
 
     @recipe.subcommand(description="Add a recipe to the recipe list")
