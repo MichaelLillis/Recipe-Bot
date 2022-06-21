@@ -1,6 +1,6 @@
 import pyrebase
-from database import firebaseConfig
- 
+from config import firebaseConfig
+
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 Success = "Recipe added!"

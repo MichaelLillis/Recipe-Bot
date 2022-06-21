@@ -1,5 +1,4 @@
 import pyrebase
-
  
 def patch():
     from urllib.parse import quote
