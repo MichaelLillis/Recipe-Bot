@@ -18,7 +18,7 @@ class SetupModal(ui.Modal):
         self.add_item(self.setup)
 
     async def callback(self, interaction: Interaction):
-        with open("config.py") as f:
+        with open("config.py", "w") as f:
             f.write(f"firebaseConfig = {{{self.setup.value}}}")
         await interaction.send(
             f"Config setup"
