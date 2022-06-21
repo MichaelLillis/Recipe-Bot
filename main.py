@@ -39,6 +39,7 @@ bot.load_extension("cogs.setup")
     guild_ids=[int(server)],
 )
 async def load(interaction: nextcord.Interaction):
+    bot.unload_extension("cogs.setup")
     for cogs in cog_list:
         bot.load_extension(cogs)
     await interaction.send
