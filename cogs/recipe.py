@@ -2,13 +2,12 @@ import nextcord
 from nextcord.ext import commands
 from main import server
 try:
-    from src.create_recipe import db
+    from setup import db
     from src.modal import RecipeModal
     from src.find_recipe import recipe_delete, recipe_find
     from src.embed import create_embed
 except Exception as e:
     print(f"Error - Run the setup command: {e}")
-
 
 
 class Recipe(commands.Cog):

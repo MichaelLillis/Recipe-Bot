@@ -1,7 +1,7 @@
 from string import capwords
 
 try:
-    from src.create_recipe import db
+    from cogs.setup import db
 except Exception as e:
     print(f"Error - Run the setup command: {e}")
 
