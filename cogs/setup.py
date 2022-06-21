@@ -1,15 +1,15 @@
-from nextcord import Permissions
 import nextcord
 from nextcord.ext import commands
-from src.setup_modal import SetupModal
+import src.setup_modal
 from main import server
 import pyrebase
-from config import firebaseConfig
 try:
-    firebase = pyrebase.initialize_app(firebaseConfig)
+    import config
+    firebase = pyrebase.initialize_app(config.firebaseConfig)
     db = firebase.database()
 except Exception as e:
     print(f"Error - Run the setup command: {e}")
+
 
 class Setup(commands.Cog):
     def __init__(self, bot):
@@ -20,7 +20,7 @@ class Setup(commands.Cog):
         guild_ids=[int(server)],
     )
     async def setup(self, interaction: nextcord.Interaction):
-        await interaction.response.send_modal(SetupModal())
+        await interaction.response.send_modal(src.setup_modal.SetupModal())
 
 
 def setup(bot):
