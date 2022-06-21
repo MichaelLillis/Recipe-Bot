@@ -1,8 +1,11 @@
 import pyrebase
 from database import firebaseConfig
 
-firebase = pyrebase.initialize_app(firebaseConfig)
-db = firebase.database()
+try:
+    firebase = pyrebase.initialize_app(firebaseConfig)
+    db = firebase.database()
+except Exception as e:
+    print(f"Setup the config: {e}")
 Success = "Recipe added!"
 Failed = "Error - Recipe Add Failed. Make sure you don't already have a recipe with this name."
 

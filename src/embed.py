@@ -1,9 +1,10 @@
+from cgi import print_arguments
 from nextcord import Embed, Interaction
 import nextcord
 import string
 from src.find_recipe import separate_ingredients
 import asyncio
- 
+
 
 async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
     pages = []
@@ -18,9 +19,48 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
         embed.add_field(
             name='Ingredients', value=sep, inline=False
         )
-        embed.add_field(
-            name='Instructions', value=items[item][1]["Instructions"], inline=False
-        )
+        if len(items[item][1]["Instructions"]) < 1024:
+            embed.add_field(
+                name='Instructions', value=items[item][1]["Instructions"], inline=False
+            )
+        elif len(items[item][1]["Instructions"]) > 1024 and len(items[item][1]["Instructions"]) < 2047:
+            s1 = items[item][1]["Instructions"][:len(
+                items[item][1]["Instructions"])//2]
+            s2 = items[item][1]["Instructions"][len(
+                items[item][1]["Instructions"])//2:]
+            items[item][1]["Instructions"]
+            embed.add_field(
+                name='Instructions 1/2', value=s1, inline=False
+            )
+            embed.add_field(
+                name='Instructions 2/2', value=s2, inline=False
+            )
+        elif len(items[item][1]["Instructions"]) > 2048:
+            s1 = items[item][1]["Instructions"][:len(
+                items[item][1]["Instructions"])//2]
+            s2 = items[item][1]["Instructions"][len(
+                items[item][1]["Instructions"])//2:]
+            items[item][1]["Instructions"]
+            s3 = s1[:len(
+                s1)//2]
+            s4 = s2[:len(
+                s2)//2]
+            s5 = s1[len(
+                s1)//2:]
+            s6 = s2[len(
+                s2)//2:]
+            embed.add_field(
+                name='Instructions 1/4', value=s3, inline=False
+            )
+            embed.add_field(
+                name='Instructions 2/4', value=s5, inline=False
+            )
+            embed.add_field(
+                name='Instructions 3/4', value=s4, inline=False
+            )
+            embed.add_field(
+                name='Instructions 4/4', value=s6, inline=False
+            )
         pages.append(embed)
 
     if (len(pages) == 1):
@@ -32,7 +72,7 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
 
         for button in buttons:
             await msg.add_reaction(button)
- 
+
         while True:
             try:
                 reaction, user = await bot.wait_for(
