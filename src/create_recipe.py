@@ -1,7 +1,7 @@
 import pyrebase
-from database import firebaseConfig
 
 try:
+    from database import firebaseConfig
     firebase = pyrebase.initialize_app(firebaseConfig)
     db = firebase.database()
 except Exception as e:
