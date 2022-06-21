@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from database import patch
 from src.modal import RecipeModal
+from nextcord import Permissions
 
 
 class Bot(nextcord.ext.commands.Bot):
