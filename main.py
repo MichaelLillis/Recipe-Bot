@@ -36,7 +36,7 @@ for fn in os.listdir("./cogs"):
 @bot.slash_command(
     description="Setup the database config",
     guild_ids=[int(server)],
-    default_member_permissions=Permissions(administrator=True)
+    default_permissions=Permissions(administrator=True)
 )
 async def load(interaction: nextcord.Interaction):
     for cogs in cog_list:
