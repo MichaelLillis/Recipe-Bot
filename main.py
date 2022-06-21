@@ -4,9 +4,6 @@ import nextcord.ext.commands
 import os
 from dotenv import load_dotenv
 from database import patch
-from src.modal import RecipeModal
-from nextcord import Permissions
-from src.setup_modal import SetupModal
 
 
 class Bot(nextcord.ext.commands.Bot):
@@ -17,8 +14,6 @@ class Bot(nextcord.ext.commands.Bot):
 
     async def on_ready(self):
         if not self.persistent_modals_added:
-            self.add_modal(RecipeModal())
-            self.add_modal(SetupModal())
             self.persistent_modals_added = True
         print(f"Logged in as {self.user} (ID: {self.user.id})")
 
