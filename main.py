@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from database import patch
 from src.modal import RecipeModal
 from nextcord import Permissions
+from src.setup_modal import SetupModal
 
 
 class Bot(nextcord.ext.commands.Bot):
@@ -17,6 +18,7 @@ class Bot(nextcord.ext.commands.Bot):
     async def on_ready(self):
         if not self.persistent_modals_added:
             self.add_modal(RecipeModal())
+            self.add_modal(SetupModal())
             self.persistent_modals_added = True
         print(f"Logged in as {self.user} (ID: {self.user.id})")
 
@@ -42,7 +44,7 @@ async def load(interaction: nextcord.Interaction):
     bot.unload_extension("cogs.setup")
     for cogs in cog_list:
         bot.load_extension(cogs)
-    await interaction.send
+    await interaction.send("Loaded cogs")
 try:
     bot.run(token)
 except Exception as e:
