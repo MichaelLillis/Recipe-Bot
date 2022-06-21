@@ -1,7 +1,11 @@
 from string import capwords
-from src.create_recipe import db
 
- 
+try:
+    from src.create_recipe import db
+except Exception as e:
+    print(f"Error - Run the setup command: {e}")
+
+
 def recipe_find(input: str) -> list:
     try:
         if input.startswith("<@!"):

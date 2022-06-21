@@ -1,8 +1,8 @@
-from discord import Permissions
+from nextcord import Permissions
 import nextcord
 from nextcord.ext import commands
 from src.setup_modal import SetupModal
-from recipe import server
+from main import server
 
 
 class Recipe(commands.Cog):
@@ -10,7 +10,7 @@ class Recipe(commands.Cog):
         self.bot = bot
 
     @nextcord.slash_command(
-        description="Add a recipe to the recipes list!",
+        description="Setup the database config",
         guild_ids=[int(server)],
         default_member_permissions=Permissions(administrator=True)
     )
