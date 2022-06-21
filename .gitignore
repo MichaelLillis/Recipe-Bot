@@ -127,8 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
 config.*
 database.*
 *.env
-database_sample.py

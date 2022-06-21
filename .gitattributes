@@ -1,2 +1,0 @@
-.env merge=ours
-database.py merge=ours
