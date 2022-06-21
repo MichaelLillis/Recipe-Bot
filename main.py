@@ -31,12 +31,12 @@ cog_list = []
 for fn in os.listdir("./cogs"):
     if fn.endswith(".py"):
         cog_list.append(f"cogs.{fn[:-3]}")
+bot.load_extension("cogs.setup.py")
 
 
 @bot.slash_command(
     description="Setup the database config",
     guild_ids=[int(server)],
-    default_permissions=Permissions(administrator=True)
 )
 async def load(interaction: nextcord.Interaction):
     for cogs in cog_list:
