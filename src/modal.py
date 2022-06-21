@@ -2,7 +2,7 @@ from nextcord import ui, TextInputStyle, Interaction
 from src.create_recipe import new_recipe, Success, Failed
 from datetime import datetime
 
- 
+
 class RecipeModal(ui.Modal):
     def __init__(self):
         super().__init__(
@@ -23,6 +23,7 @@ class RecipeModal(ui.Modal):
         self.ingredients = ui.TextInput(
             label="List of recipe ingredients",
             placeholder="1½ cups all-purpose flour, 3½ teaspoons baking powder¼ teaspoon salt or more to taste...",
+            style=TextInputStyle.paragraph,
             required=True,
             custom_id="persistent_modal:ingredients",
         )

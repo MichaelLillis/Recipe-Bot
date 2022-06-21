@@ -17,7 +17,7 @@ class Recipe(commands.Cog):
         description="Add a recipe to the recipes list!",
         guild_ids=[int(server)],
     )
-    async def recipe(self, interaction: nextcord.Interaction):
+    async def recipe(self):
         pass
 
     @recipe.subcommand(description="Add a recipe to the recipe list")
@@ -41,8 +41,7 @@ class Recipe(commands.Cog):
     @recipe.subcommand(description="Return all recipes")
     async def all(self, interaction: nextcord.Interaction):
         try:
-            recipes = db.child("Recipes").order_by_child(
-                "Recipe").get()
+            recipes = db.child("Recipes").get()
             our_recipe = recipes.val()
             items = list(our_recipe.items())
             await create_embed(self.bot, interaction, items)

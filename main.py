@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from database import patch
 from src.modal import RecipeModal
 
-  
+
 class Bot(nextcord.ext.commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,7 +22,6 @@ class Bot(nextcord.ext.commands.Bot):
 
 load_dotenv()
 patch()
-token = os.getenv("TOKEN")
 prefix = os.getenv("PREFIX")
 bot = Bot(prefix)
 cog_list = []
@@ -35,6 +34,7 @@ if __name__ == '__main__':
         bot.load_extension(cogs)
 
 try:
+    token = os.getenv("TOKEN")
     bot.run(token)
 except Exception as e:
-    print(f"Error - Login Failed: {e}")
+    print(f"Error - Login Failed, setup the config: {e}")
