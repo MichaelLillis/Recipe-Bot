@@ -49,7 +49,6 @@ Recipe bot is very simple to use! There are only a few basic commands you'll nee
 ![jk4KU4y](https://user-images.githubusercontent.com/36655595/174545868-64e6ed56-78bd-41d8-8a86-2c445241689d.png)
 
 
-
 ## Links 🔗
 
 > [Firebase - Free database hosting/handling+](https://firebase.google.com/)
