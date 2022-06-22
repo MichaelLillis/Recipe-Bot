@@ -15,6 +15,7 @@ class RecipeModal(ui.Modal):
             label="Recipe Title",
             placeholder="Good Old Fashioned Pancakes!",
             required=True,
+            max_length=100,
             style=TextInputStyle.short,
             custom_id="persistent_modal:recipe_title",
         )
@@ -23,6 +24,7 @@ class RecipeModal(ui.Modal):
         self.ingredients = ui.TextInput(
             label="List of recipe ingredients",
             placeholder="1½ cups all-purpose flour, 3½ teaspoons baking powder¼ teaspoon salt or more to taste...",
+            max_length=1000,
             style=TextInputStyle.paragraph,
             required=True,
             custom_id="persistent_modal:ingredients",
@@ -32,6 +34,7 @@ class RecipeModal(ui.Modal):
         self.instructions = ui.TextInput(
             label="How to make the recipe",
             placeholder="Step 1: Add flour into a large bowl. Step 2: Add the eggs...",
+            max_length=2000,
             style=TextInputStyle.paragraph,
             required=True,
             custom_id="persistent_modal:instructions",
