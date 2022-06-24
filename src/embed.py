@@ -1,4 +1,3 @@
-from array import array
 from nextcord import Embed, Interaction
 import nextcord
 import string
@@ -78,7 +77,7 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
                     await msg.edit(embed=pages[current_page])
 
 
-def divide(words: str) -> array:
+def divide(words: str) -> list:
     s1 = words[:len(words)//2]
     s2 = words[len(words)//2:]
     return [s1, s2]
