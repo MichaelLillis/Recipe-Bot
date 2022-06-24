@@ -3,7 +3,7 @@
 > Recipe Bot is a [Discord](https://discord.com/) Bot created using [Python](https://docs.python.org/3/), [Firebase](https://firebase.google.com/) for database handling, and [Nextcord](https://docs.nextcord.dev/en/stable/) as a Discord API wrapper.
 
 #
-  
+   
 <img src="https://user-images.githubusercontent.com/36655595/174419643-1e767604-7fcf-4503-b385-a650f211bf34.png" img align="right" width=25%>
 
 ## Installation 💻
@@ -47,8 +47,6 @@ Recipe bot is very simple to use! There are only a few basic commands you'll nee
 
 ![blpow1g](https://user-images.githubusercontent.com/36655595/174545237-1b7c5cd3-6c96-4c35-bde8-1394a82c8550.png)
 ![jk4KU4y](https://user-images.githubusercontent.com/36655595/174545868-64e6ed56-78bd-41d8-8a86-2c445241689d.png)
-
-
 
 ## Links 🔗
 
