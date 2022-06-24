@@ -1,3 +1,8 @@
+import pyrebase
+
+
+def patch():
+    from urllib.parse import quote
     # See https://github.com/thisbejim/Pyrebase/issues/294.
     pyrebase.pyrebase.quote = lambda s, safe=None: s
 
