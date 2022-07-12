@@ -1,5 +1,5 @@
 from nextcord import ui, TextInputStyle, Interaction
-from src.create_recipe import new_recipe, Success, Failed
+from src.recipe_object import Recipe, Success, Failed
 from datetime import datetime
 
 
@@ -42,16 +42,14 @@ class RecipeModal(ui.Modal):
         self.add_item(self.instructions)
 
     async def callback(self, interaction: Interaction):
-        ingredient_list = self.ingredients.value.split(", ")
-        date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        Add = new_recipe(
-            self.recipe_title.value,
-            ingredient_list,
-            self.instructions.value,
-            date_time,
-            interaction.user.display_name,
-            interaction.user.id
-        )
+        recipe = Recipe()
+        recipe.ingredient_list = self.ingredients.value.split(", ")
+        recipe.date = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        recipe.recipe_name = self.recipe_title.value
+        recipe.instructions = self.instructions.value
+        recipe.user = interaction.user.display_name
+        recipe.user_id = interaction.user.id
+        Add = recipe.new_recipe(recipe)
         if Add:
             await interaction.send(
                 f"{Success}"

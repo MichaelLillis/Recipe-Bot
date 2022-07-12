@@ -1,5 +1,5 @@
 from string import capwords
-from src.create_recipe import db
+from src.recipe_object import db
 
  
 def recipe_find(input: str) -> list:
