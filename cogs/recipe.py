@@ -4,7 +4,7 @@ from src.modal import RecipeModal
 from src.find_recipe import recipe_delete, recipe_find
 from src.embed import create_embed
 import os
-from src.create_recipe import db
+from src.recipe_object import db
 
 server = os.getenv("SERVER")
 
