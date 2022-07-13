@@ -42,14 +42,15 @@ class RecipeModal(ui.Modal):
         self.add_item(self.instructions)
 
     async def callback(self, interaction: Interaction):
-        recipe = Recipe()
-        recipe.ingredient_list = self.ingredients.value.split(", ")
-        recipe.date = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        recipe.recipe_name = self.recipe_title.value
-        recipe.instructions = self.instructions.value
-        recipe.user = interaction.user.display_name
-        recipe.user_id = interaction.user.id
-        Add = recipe.new_recipe(recipe)
+        recipe = Recipe(
+        self.recipe_title.value,
+        self.ingredients.value.split(", "),
+        self.instructions.value,
+        datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+        interaction.user.display_name,
+        interaction.user.id
+        )
+        Add = recipe.new_recipe()
         if Add:
             await interaction.send(
                 f"{Success}"
