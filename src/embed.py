@@ -7,6 +7,7 @@ import asyncio
 
 async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
     pages = []
+    # Loop through to handle paging and embed message creation
     for item in range(len(items)):
         name_of_recipe = string.capwords(items[item][1]["Recipe"])
         ingredients = items[item][1]["Ingredients"]
@@ -19,6 +20,7 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
         embed.add_field(
             name='Ingredients', value=sep, inline=False
         )
+        # Ensure we handle longer recipes differently (1024 char limit for Discord limit)
         if len(instructions) < 1024:
             embed.add_field(
                 name='Instructions', value=instructions, inline=False
@@ -33,6 +35,7 @@ async def create_embed(bot, interaction: Interaction, items: list) -> Embed:
             )
         pages.append(embed)
 
+    # Handle paging
     if (len(pages) == 1):
         await interaction.send(embed=pages[0])
     else:
