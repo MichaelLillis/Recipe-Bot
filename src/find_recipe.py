@@ -4,6 +4,7 @@ from src.recipe_object import db
  
 def recipe_find(input: str) -> list:
     try:
+        # "<@!" Refers to when a user auto-completes using "@" to find a user
         if input.startswith("<@!"):
             author_id = int(''.join(filter(str.isdigit, input)))
             recipes = db.child("Recipes").order_by_child(
@@ -25,7 +26,8 @@ def recipe_delete(input: str, user_id: int, user: str) -> str:
             "Recipe").equal_to(input).get()
         our_recipe = recipes.val()
         items = list(our_recipe.items())
-
+        
+       # Delete recipe if record exists, and user has permission
         if user_id == items[0][1]["Author"]:
             try:
                 db.child("Recipes").child(
@@ -41,7 +43,6 @@ def recipe_delete(input: str, user_id: int, user: str) -> str:
         end = f"No recipes with the name \"{input}\" exist."
 
     return end
-
 
 def separate_ingredients(items: list) -> str:
     recipe_ingredients = items
